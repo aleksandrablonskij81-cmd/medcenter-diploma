@@ -1,8 +1,6 @@
 import pytest
 from django.urls import reverse
 
-from services.models import Service
-
 
 @pytest.mark.django_db
 class TestServiceModel:
