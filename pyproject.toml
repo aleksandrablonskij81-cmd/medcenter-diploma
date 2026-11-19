@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = [
+    "migrations",
+    ".venv",
+    "staticfiles",
+    "media",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = [
+    "RUF012",  # mutable class attrs — стандарт Django (Meta, choices, ordering)
+]

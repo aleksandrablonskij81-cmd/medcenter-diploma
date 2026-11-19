@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Мои записи — {{ settings.company_name }}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Мои записи</h1>
+            <a href="{% url 'appointments:create' %}" class="btn btn-primary">Новая запись</a>
+        </div>
+
+        {% if appointments %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Услуга</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Статус</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in appointments %}
+                            <tr>
+                                <td>{{ a.service.name }}</td>
+                                <td>{{ a.date|date:"d.m.Y" }}</td>
+                                <td>{{ a.time|time:"H:i" }}</td>
+                                <td>
+                                    {% if a.status == "new" %}<span class="badge bg-secondary">Новая</span>
+                                    {% elif a.status == "confirmed" %}<span class="badge bg-info text-dark">Подтверждена</span>
+                                    {% elif a.status == "done" %}<span class="badge bg-success">Выполнена</span>
+                                    {% else %}<span class="badge bg-danger">Отменена</span>{% endif %}
+                                </td>
+                                <td><a href="{% url 'appointments:detail' a.pk %}" class="btn btn-sm btn-outline-primary">Детали</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">У вас пока нет записей. <a href="{% url 'appointments:create' %}">Записаться на приём</a>.</div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.name }} — {{ settings.company_name }}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'services:list' %}">Услуги</a></li>
+                <li class="breadcrumb-item active">{{ service.name }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>{{ service.name }}</h1>
+                <p class="lead text-muted">{{ service.short_description }}</p>
+                <div class="mt-4">{{ service.description|linebreaks }}</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    {% if service.image %}
+                        <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Стоимость</p>
+                        <h3 class="text-primary">{{ service.price }} ₽</h3>
+                        <a href="{% url 'core:contacts' %}" class="btn btn-primary w-100 mt-3">Записаться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
